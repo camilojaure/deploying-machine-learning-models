@@ -1,7 +1,8 @@
 from flask import Blueprint, request, jsonify
+from flask_cors import CORS
 from regression_model.predict import make_prediction
 from regression_model import __version__ as _version
-from neural_network_model.predict import make_single_prediction
+#from neural_network_model.predict import make_single_prediction
 import os
 from werkzeug.utils import secure_filename
 
@@ -14,6 +15,7 @@ _logger = get_logger(logger_name=__name__)
 
 prediction_app = Blueprint('prediction_app', __name__)
 
+CORS(prediction_app)
 
 @prediction_app.route('/health', methods=['GET'])
 def health():
@@ -53,7 +55,7 @@ def predict():
                         'errors': errors})
 
 
-@prediction_app.route('/predict/classifier', methods=['POST'])
+"""@prediction_app.route('/predict/classifier', methods=['POST'])
 def predict_image():
     if request.method == 'POST':
         # Step 1: check if the post request has the file part
@@ -86,4 +88,4 @@ def predict_image():
         # Step 5: Return the response as JSON
         return jsonify(
             {'readable_predictions': readable_predictions[0],
-             'version': version})
+             'version': version})"""
